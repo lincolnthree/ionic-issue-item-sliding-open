@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 
+export interface MessageGroup {
+  name: string;
+  messages: Message[];
+}
+
 export interface Message {
   fromName: string;
   subject: string;
@@ -73,8 +78,17 @@ export class DataService {
 
   constructor() { }
 
-  public getMessages(): Message[] {
-    return this.messages;
+  public getMessages(quantity?: number): Message[] {
+    let result: Message[] = [];
+    if (quantity) {
+      for (let i = 0; i < quantity; i++) {
+        const index = Math.floor(this.messages.length * Math.random());
+        result.push(this.messages[0])
+      }
+    } else {
+      result = this.messages;
+    }
+    return result;
   }
 
   public getMessageById(id: number): Message {

@@ -10,7 +10,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">
@@ -18,8 +18,24 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
-  
-  <ion-list>
-    <app-message *ngFor="let message of getMessages()" [message]="message"></app-message>
+
+  <ion-list *ngFor="let group of (timedGroups$ | async); trackBy: trackGroupByName ">
+    <ion-item-divider>
+      <ion-label>{{group.name}}</ion-label>
+    </ion-item-divider>
+    <ion-item-sliding #slider *ngFor="let message of group.messages; trackBy: trackMessageById">
+
+      <ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+
+      <ion-item-options>
+        <div style="width: 100px; background: red;"></div>
+      </ion-item-options>
+
+      <ng-template #itemTemplate>
+        <ion-item (click)="openSlider(slider)">
+          <ion-label>{{message.id}}: {{message.subject}}</ion-label>
+        </ion-item>
+      </ng-template>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
