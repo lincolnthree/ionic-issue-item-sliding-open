@@ -1,0 +1,7 @@
+{
+  "name": "ionic-issue-ion-item-sliding",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
